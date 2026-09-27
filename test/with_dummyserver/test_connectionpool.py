@@ -1066,7 +1066,7 @@ class TestConnectionPool(HypercornDummyServerTestCase):
         with HTTPConnectionPool(self.host, self.port) as pool:
             with pytest.raises(
                 ValueError,
-                match="urllib3.util.SKIP_HEADER only supports 'Accept-Encoding', 'Host', 'User-Agent'",
+                match="urllib3.util.SKIP_HEADER only supports 'Accept', 'Accept-Encoding', 'Host', 'User-Agent'",
             ) as e:
                 pool.request(
                     "GET", "/headers", headers={header: SKIP_HEADER}, chunked=chunked

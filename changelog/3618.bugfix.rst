@@ -1,0 +1,2 @@
+Allow ``SKIP_HEADER`` to suppress the ``Accept`` header added by
+``ProxyManager``.

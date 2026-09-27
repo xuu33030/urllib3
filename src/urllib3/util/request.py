@@ -14,10 +14,10 @@ if typing.TYPE_CHECKING:
 
 # Pass as a value within ``headers`` to skip
 # emitting some HTTP headers that are added automatically.
-# The only headers that are supported are ``Accept-Encoding``,
+# The only headers that are supported are ``Accept``, ``Accept-Encoding``,
 # ``Host``, and ``User-Agent``.
 SKIP_HEADER = "@@@SKIP_HEADER@@@"
-SKIPPABLE_HEADERS = frozenset(["accept-encoding", "host", "user-agent"])
+SKIPPABLE_HEADERS = frozenset(["accept", "accept-encoding", "host", "user-agent"])
 
 ACCEPT_ENCODING = "gzip,deflate"
 try:
