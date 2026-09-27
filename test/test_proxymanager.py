@@ -13,6 +13,7 @@ from urllib3.exceptions import (
 )
 from urllib3.poolmanager import ProxyManager
 from urllib3.response import HTTPResponse
+from urllib3.util.request import SKIP_HEADER
 from urllib3.util.retry import Retry
 from urllib3.util.url import parse_url
 
@@ -85,6 +86,15 @@ class TestProxyManager:
             headers = p._set_proxy_headers(url_with_port, provided_headers)
 
             assert headers == expected_headers
+
+    @pytest.mark.parametrize("proxy_scheme", ["http", "https"])
+    def test_skip_proxy_accept_header(self, proxy_scheme: str) -> None:
+        with ProxyManager(f"{proxy_scheme}://something:1234") as p:
+            headers = p._set_proxy_headers(
+                "http://pypi.org/project/urllib3/", {"Accept": SKIP_HEADER}
+            )
+
+        assert headers["Accept"] == SKIP_HEADER
 
     def test_default_port(self) -> None:
         with ProxyManager("http://something") as p:

@@ -362,3 +362,20 @@ class TestConnection:
             assert "User-Agent" in request_headers
         else:
             assert user_agent not in request_headers
+
+    def test_skip_accept_header(self) -> None:
+        headers = {"Accept": SKIP_HEADER}
+
+        with (
+            mock.patch("urllib3.util.connection.create_connection"),
+            mock.patch(
+                "urllib3.connection._HTTPConnection.putheader"
+            ) as http_client_putheader,
+        ):
+            conn = HTTPConnection("")
+            conn.request("GET", "/headers", headers=headers)
+
+        request_headers = {
+            call.args[0]: call.args[1] for call in http_client_putheader.call_args_list
+        }
+        assert "Accept" not in request_headers
